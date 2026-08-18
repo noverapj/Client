@@ -32,16 +32,41 @@ Client-side source code for the Novera game project. This repository contains th
 ## Prerequisites
 
 - Visual Studio 2010 (or VS 2022 with v100 platform toolset)
-- Premake5 (beta 8)
 - DirectX SDK (June 2010) — set `DXSDK_DIR` environment variable
 - Windows SDK 7.0A
+- Premake5 is auto-downloaded by `build.bat` (no manual install needed)
 
 ## Building
 
+### Quick start
+
 ```batch
-premake5.exe vs2010 --file=premake5.lua
-msbuild build\SourceClient.sln /p:Configuration=Debug /p:Platform=Win32 /p:PlatformToolset=v100 /m
+build.bat                    # Generate VS2010 project files (auto-downloads premake5)
+scripts\build.bat Debug       # Build solution (Debug)
+scripts\build.bat All         # Build Debug + Release + Shipping
 ```
+
+### Build single project
+
+```batch
+scripts\build_project.bat io3DEngine              # Debug (default)
+scripts\build_project.bat SurvivalProject2 Shipping # Shipping config
+scripts\build_project.bat                          # List available projects
+```
+
+### Available configs
+
+| Config | Description |
+|--------|-------------|
+| `Debug` | Debug runtime (/MDd) |
+| `Release` | Release runtime (/MD) |
+| `Shipping` | Release with `SHIPPING` define |
+| `Shipping_QA` | Shipping with QA flags |
+| `Ship_NA`, `Ship_BR`, ... | Region-specific shipping |
+| `SRC_KOR` | Korean region (LSWebBroker) |
+| `Debug Static`, `Release Static` | Static runtime variants |
+
+Any config name can be passed to `scripts\build.bat` or `scripts\build_project.bat`.
 
 ## Directory Structure
 
