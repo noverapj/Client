@@ -72,8 +72,9 @@ Any config name can be passed to `scripts\build.bat` or `scripts\build_project.b
 
 ```
 SourceClient/
+├── build.bat             # Premake5 generator (auto-downloads premake5)
 ├── premake5.lua          # Premake5 build configuration
-├── scripts/              # Build helper scripts
+├── scripts/              # Build scripts (build.bat, build_project.bat, gen_version.bat)
 ├── src/                  # Source code
 │   ├── io3DEngine/       # 3D engine
 │   ├── ioPac/            # Pack file system
