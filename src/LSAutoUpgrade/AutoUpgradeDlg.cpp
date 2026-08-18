@@ -688,6 +688,9 @@ void CAutoUpgradeDlg::ParseCmd( IN const char *szCmdLine, OUT CString &szOptinos
 		case CAutoUpgradeDlg::CT_OPTIONS:
 			szOptinosOnCmd = szResult;
 			break;
+		case CAutoUpgradeDlg::CT_IPKEYVALUE:
+			m_szIPKeyValue = szResult;
+			break;
 		case CAutoUpgradeDlg::CT_FULLZIPVER:
 			m_szFullZipVer = szResult;
 			break;
