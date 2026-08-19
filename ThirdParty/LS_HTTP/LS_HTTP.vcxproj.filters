@@ -32,16 +32,16 @@
     <ClInclude Include="stdafx.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\atlrx.h">
+    <ClInclude Include="atlrx.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\RegExp.h">
+    <ClInclude Include="RegExp.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\StringProcess.h">
+    <ClInclude Include="StringProcess.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\WinHttpClient.h">
+    <ClInclude Include="WinHttpClient.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="ioHTTP.h">

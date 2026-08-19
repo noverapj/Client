@@ -47,7 +47,7 @@ project "io3DEngine"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     pchheader "stdafx.h"; pchsource "src/io3DEngine/StdAfx.cpp"
     defines { "_USRDLL", "IO3D_API" }
-    includedirs { "ThirdParty/Bullet", "ThirdParty", "ThirdParty/DevIL", "src/OggVorbis/include", DXSDK .. "Include" }
+    includedirs { "ThirdParty/Bullet", "ThirdParty", "src/OggVorbis/include", DXSDK .. "Include" }
     libdirs { "lib", "lib/Bullet", "lib/Squish", "lib/Opcode", "lib/TinyXML", "lib/DevIL", "lib/OggVorbis", DXSDK .. "Lib\\x86" }
     files { "src/io3DEngine/**.h", "src/io3DEngine/**.cpp", "src/io3DEngine/**.rc" }
     Vpaths("src/io3DEngine")
