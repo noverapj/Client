@@ -47,7 +47,7 @@ project "io3DEngine"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     pchheader "stdafx.h"; pchsource "src/io3DEngine/StdAfx.cpp"
     defines { "_USRDLL", "IO3D_API" }
-    includedirs { "ThirdParty/Bullet", "ThirdParty", "src/OggVorbis/include", DXSDK .. "Include" }
+    includedirs { "ThirdParty/Bullet", "ThirdParty", "ThirdParty/OggVorbis", DXSDK .. "Include" }
     libdirs { "lib", "lib/Bullet", "lib/Squish", "lib/Opcode", "lib/TinyXML", "lib/DevIL", "lib/OggVorbis", DXSDK .. "Lib\\x86" }
     files { "src/io3DEngine/**.h", "src/io3DEngine/**.cpp", "src/io3DEngine/**.rc" }
     Vpaths("src/io3DEngine")
@@ -70,8 +70,8 @@ project "ioFreeType"
     targetdir "lib"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     files { "src/ioFreeType/**.h", "src/ioFreeType/**.cpp", "src/ioFreeType/**.rc" }
-    includedirs { "src/ioFreeType", "src/ioFreeType/include", "src/ioFreeType/FreeType/include" }
-    libdirs { "lib", "src/ioFreeType/FreeType/Lib" }
+    includedirs { "src/ioFreeType", "src/ioFreeType/include", "ThirdParty/FreeType" }
+    libdirs { "lib", "lib/FreeType" }
     Vpaths("src/ioFreeType")
     filter "configurations:Debug" runtime "Debug"; staticruntime "Off"; targetname "ioFreeTypeD"
     filter "configurations:Release" runtime "Release"; staticruntime "Off"; targetname "ioFreeType"
@@ -85,6 +85,7 @@ project "ioPac"
     targetdir "lib"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     files { "src/ioPac/**.h", "src/ioPac/**.cpp", "src/ioPac/**.rc" }
+    includedirs { "ThirdParty" }
     libdirs { "lib", "lib/ZipArchive" }
     Vpaths("src/ioPac")
     prebuildcommands { '"$(ProjectDir)..\\scripts\\gen_version.bat" "$(ProjectDir)..\\src\\ioPac" Version.h' }
@@ -141,7 +142,7 @@ project "FlashDX"
     targetdir "lib"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     files { "src/FlashPlayerToDirectX/**.h", "src/FlashPlayerToDirectX/**.cpp", "src/FlashPlayerToDirectX/**.rc" }
-    includedirs { "src/FlashPlayerToDirectX", "src/FlashPlayerToDirectX/Include", "lib" }
+    includedirs { "src/FlashPlayerToDirectX", "ThirdParty/FlashDX", "lib" }
     multiprocessorcompile "Off"
     links { "shlwapi" }
     Vpaths("src/FlashPlayerToDirectX")
@@ -166,19 +167,7 @@ project "ErrorDlg"
     filter "configurations:Release" runtime "Release"; targetname "ErrorDlg"
     filter {}
 
--- OggVorbis : static lib (build from source)
-project "OggVorbis"
-    kind "StaticLib"
-    language "C++"
-    location "build"
-    targetdir "lib"
-    objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
-    staticruntime "On"
-    files { "src/OggVorbis/**.h", "src/OggVorbis/**.c", "src/OggVorbis/**.cpp" }
-    Vpaths("src/OggVorbis")
-    filter "configurations:Debug" runtime "Debug"; targetname "OggVorbisD"
-    filter "configurations:Release" runtime "Release"; targetname "OggVorbis"
-    filter {}
+-- OggVorbis : prebuilt libs in lib/OggVorbis, headers in ThirdParty/OggVorbis
 
 ------------------------------------------------------------------ apps
 group "Apps"
