@@ -3,7 +3,7 @@
 
 #ifdef NPROTECT
 
-#include "NPGameLib.h"
+#include "nProtect/NPGameLib.h"
 
 #pragma comment(lib, "nProtect/NPGameLib.lib" )
 

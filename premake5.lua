@@ -159,7 +159,7 @@ project "ErrorDlg"
     targetdir "lib"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     staticruntime "On"
-    includedirs { DXSDK .. "Include" }
+    includedirs { "ThirdParty", DXSDK .. "Include" }
     libdirs { DXSDK .. "Lib\\x86" }
     files { "src/ErrorDlg/**.h", "src/ErrorDlg/**.cpp" }
     Vpaths("src/ErrorDlg")
@@ -184,7 +184,7 @@ project "SurvivalProject2"
     files { "src/LSClient/**.h", "src/LSClient/**.cpp", "src/LSClient/**.rc" }
     removefiles { "src/LSClient/blowfish.cpp", "src/LSClient/Channeling/ioChannelingNodeHappyTuk.cpp", "src/LSClient/ioFlameDashWeapon.cpp", "src/LSClient/Local/ioLocalPhilippine.cpp" }
     Vpaths("src/LSClient")
-    includedirs { "src", "src/io3DEngine", "ThirdParty", "ThirdParty/HackShield", "ThirdParty/nProtect", "ThirdParty/Xtrap", "ThirdParty/XignCode", "ThirdParty/Themida", "ThirdParty/Bandicap", DXSDK .. "Include" }
+    includedirs { "src", "src/io3DEngine", "ThirdParty", DXSDK .. "Include" }
     libdirs { "lib", "lib/Bullet", "lib/Xtrap", "lib/ioVoiceChat", "lib/LuaState", "lib/Squish", "lib/Opcode", "lib/TinyXML", "lib/DevIL", "lib/OggVorbis", DXSDK .. "Lib\\x86" }
     links { "Psapi", "DbgHelp", "Imagehlp", "wininet", "Urlmon", "Iphlpapi", "Version",
             "dinput8", "d3d9", "dxguid", "d3dx9", "winmm", "odbc32", "odbccp32", "Xinput", "Iepmapi",
@@ -233,7 +233,7 @@ project "LSAutoUpgrade"
     files { "src/LSAutoUpgrade/**.h", "src/LSAutoUpgrade/**.cpp", "src/LSAutoUpgrade/**.rc" }
     removefiles { "src/LSAutoUpgrade/NMClass/*.cpp", "src/LSAutoUpgrade/Util/ioHashString.cpp" }
     Vpaths("src/LSAutoUpgrade")
-    includedirs { "ThirdParty", "ThirdParty/Xtrap", "ThirdParty/Themida", DXSDK .. "Include" }
+    includedirs { "ThirdParty", DXSDK .. "Include" }
     libdirs { "lib", "lib/Xtrap", "lib/FireWall", "lib/ZipArchive", DXSDK .. "Lib\\x86" }
     links { "ws2_32", "winmm", "version", "Iphlpapi" }
     linkoptions { "/FORCE:MULTIPLE" }
@@ -266,7 +266,7 @@ project "LSWebBroker"
     mfc "Static"
     files { "src/LSWebBroker/**.h", "src/LSWebBroker/**.cpp", "src/LSWebBroker/**.rc" }
     Vpaths("src/LSWebBroker")
-    includedirs { "ThirdParty", "ThirdParty/NMCrypt" }
+    includedirs { "ThirdParty" }
     libdirs { "lib", "lib/Netmarble" }
     links { "version", "Winmm" }
     linkoptions { "/FORCE:MULTIPLE" }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Tchar.h>
-#include "bandicap.h"
+#include "Bandicap/bandicap.h"
 
 class ioRenderSystem;
 class ioUIRenderer;

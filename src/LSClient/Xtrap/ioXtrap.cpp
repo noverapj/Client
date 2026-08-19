@@ -12,8 +12,8 @@
 #include <strsafe.h>
 #include "../Local/ioLocalManager.h"
 
-#include "Xtrap4Client.h"
-#include "XTrap4ClientExt1.h"
+#include "Xtrap/XTrap4Client.h"
+#include "Xtrap/XTrap4ClientExt1.h"
 #include "../Local/ioLocalUS.h"
 
 // 패치 URL이 변경되면 다시 변경해야 함
