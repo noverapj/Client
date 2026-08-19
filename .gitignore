@@ -21,6 +21,10 @@ obj/
 *.iobj
 *.ipdb
 
+# Source resource bitmaps (needed for build)
+!src/LSWebBroker/res/*.bmp
+!src/LSWebBroker/res/*.BMP
+
 # Generated files
 Version.h
 
