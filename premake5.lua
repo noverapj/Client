@@ -163,6 +163,7 @@ project "ErrorDlg"
     libdirs { DXSDK .. "Lib\\x86" }
     files { "src/ErrorDlg/**.h", "src/ErrorDlg/**.cpp" }
     Vpaths("src/ErrorDlg")
+    prebuildcommands { '"$(ProjectDir)..\\scripts\\gen_version.bat" "$(ProjectDir)..\\src\\ErrorDlg\\ErrorDlg" Version.h' }
     filter "configurations:Debug" runtime "Debug"; targetname "ErrorDlgD"
     filter "configurations:Release" runtime "Release"; targetname "ErrorDlg"
     filter {}
