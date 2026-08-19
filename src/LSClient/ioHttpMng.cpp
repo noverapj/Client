@@ -3,7 +3,7 @@
 
 #if defined( USE_GA )
 
-#include "LS_HTTP/LS_HTTP/ioHTTP.h"
+#include "LS_HTTP/ioHTTP.h"
 
 template<> ioHttpMng* Singleton< ioHttpMng >::ms_Singleton = 0;
 

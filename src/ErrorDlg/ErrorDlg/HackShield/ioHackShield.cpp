@@ -9,9 +9,9 @@
 #include "..\ioMyInfo.h"
 #include <strsafe.h>
 #include "..\io3DEngine\ioStringManager.h"
-#include "HSUpChk.h"
+#include "HackShield/HSUpChk.h"
 #include "..\Version.h"
-#include "HShield.h"
+#include "HackShield/HShield.h"
 
 ioHackShield *ioHackShield::sg_Instance = NULL;
 

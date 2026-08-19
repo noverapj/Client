@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LS_HTTP", "LS_HTTP\LS_HTTP.vcxproj", "{6011AA87-DD99-46AB-BFD4-3DB1C23E08FF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LS_HTTP", "LS_HTTP.vcxproj", "{6011AA87-DD99-46AB-BFD4-3DB1C23E08FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

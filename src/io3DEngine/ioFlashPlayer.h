@@ -21,8 +21,8 @@ FlashPlayer
 
 #include "ioWndEX.h"
 #include "comutil.h"
-#include "../FlashPlayerToDirectX/Include/IFlashDX.h"
-#include "../FlashPlayerToDirectX/Include/ASInterface.h"
+#include "FlashDX/IFlashDX.h"
+#include "FlashDX/ASInterface.h"
 
 class FlashPlayer
 {

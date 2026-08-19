@@ -134,9 +134,9 @@ __forceinline unsigned int return_PI() { __asm mov eax,   3141592654 };
 
 #pragma
 extern "C" {
-#include "LuaState/lua.h"
-#include "LuaState/lualib.h"
-#include "LuaState/lauxlib.h"
+#include "Lua/lua.h"
+#include "Lua/lualib.h"
+#include "Lua/lauxlib.h"
 }
 
 #ifdef _DEBUG

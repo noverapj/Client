@@ -2,7 +2,7 @@
 #define __ioXignCode_h__
 
 #ifdef XIGNCODE
-#include "zwave_sdk_client.h"
+#include "XignCode/zwave_sdk_client.h"
 
 #define MAX_XIGNCODE_PACKET_BUF 512
 

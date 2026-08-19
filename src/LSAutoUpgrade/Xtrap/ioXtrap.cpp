@@ -1,6 +1,6 @@
 
 #include "../StdAfx.h"
-#include "XTrap4Launcher.h"
+#include "Xtrap/XTrap4Launcher.h"
 #include <urlmon.h>
 #include ".\ioxtrap.h"
 #include "../Local/ioLocalManager.h"

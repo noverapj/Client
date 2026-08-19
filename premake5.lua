@@ -47,7 +47,7 @@ project "io3DEngine"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     pchheader "stdafx.h"; pchsource "src/io3DEngine/StdAfx.cpp"
     defines { "_USRDLL", "IO3D_API" }
-    includedirs { "ThirdParty/Bullet", "ThirdParty", "ThirdParty/DevIL", "src/OggVorbis/include", DXSDK .. "Include" }
+    includedirs { "ThirdParty/Bullet", "ThirdParty", "ThirdParty/OggVorbis", DXSDK .. "Include" }
     libdirs { "lib", "lib/Bullet", "lib/Squish", "lib/Opcode", "lib/TinyXML", "lib/DevIL", "lib/OggVorbis", DXSDK .. "Lib\\x86" }
     files { "src/io3DEngine/**.h", "src/io3DEngine/**.cpp", "src/io3DEngine/**.rc" }
     Vpaths("src/io3DEngine")
@@ -70,8 +70,8 @@ project "ioFreeType"
     targetdir "lib"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     files { "src/ioFreeType/**.h", "src/ioFreeType/**.cpp", "src/ioFreeType/**.rc" }
-    includedirs { "src/ioFreeType", "src/ioFreeType/include", "src/ioFreeType/FreeType/include" }
-    libdirs { "lib", "src/ioFreeType/FreeType/Lib" }
+    includedirs { "src/ioFreeType", "src/ioFreeType/include", "ThirdParty/FreeType" }
+    libdirs { "lib", "lib/FreeType" }
     Vpaths("src/ioFreeType")
     filter "configurations:Debug" runtime "Debug"; staticruntime "Off"; targetname "ioFreeTypeD"
     filter "configurations:Release" runtime "Release"; staticruntime "Off"; targetname "ioFreeType"
@@ -85,6 +85,7 @@ project "ioPac"
     targetdir "lib"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     files { "src/ioPac/**.h", "src/ioPac/**.cpp", "src/ioPac/**.rc" }
+    includedirs { "ThirdParty" }
     libdirs { "lib", "lib/ZipArchive" }
     Vpaths("src/ioPac")
     prebuildcommands { '"$(ProjectDir)..\\scripts\\gen_version.bat" "$(ProjectDir)..\\src\\ioPac" Version.h' }
@@ -141,7 +142,7 @@ project "FlashDX"
     targetdir "lib"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     files { "src/FlashPlayerToDirectX/**.h", "src/FlashPlayerToDirectX/**.cpp", "src/FlashPlayerToDirectX/**.rc" }
-    includedirs { "src/FlashPlayerToDirectX", "src/FlashPlayerToDirectX/Include", "lib" }
+    includedirs { "src/FlashPlayerToDirectX", "ThirdParty/FlashDX", "lib" }
     multiprocessorcompile "Off"
     links { "shlwapi" }
     Vpaths("src/FlashPlayerToDirectX")
@@ -158,7 +159,7 @@ project "ErrorDlg"
     targetdir "lib"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     staticruntime "On"
-    includedirs { DXSDK .. "Include" }
+    includedirs { "ThirdParty", DXSDK .. "Include" }
     libdirs { DXSDK .. "Lib\\x86" }
     files { "src/ErrorDlg/**.h", "src/ErrorDlg/**.cpp" }
     Vpaths("src/ErrorDlg")
@@ -166,19 +167,7 @@ project "ErrorDlg"
     filter "configurations:Release" runtime "Release"; targetname "ErrorDlg"
     filter {}
 
--- OggVorbis : static lib (build from source)
-project "OggVorbis"
-    kind "StaticLib"
-    language "C++"
-    location "build"
-    targetdir "lib"
-    objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
-    staticruntime "On"
-    files { "src/OggVorbis/**.h", "src/OggVorbis/**.c", "src/OggVorbis/**.cpp" }
-    Vpaths("src/OggVorbis")
-    filter "configurations:Debug" runtime "Debug"; targetname "OggVorbisD"
-    filter "configurations:Release" runtime "Release"; targetname "OggVorbis"
-    filter {}
+-- OggVorbis : prebuilt libs in lib/OggVorbis, headers in ThirdParty/OggVorbis
 
 ------------------------------------------------------------------ apps
 group "Apps"
@@ -195,7 +184,7 @@ project "SurvivalProject2"
     files { "src/LSClient/**.h", "src/LSClient/**.cpp", "src/LSClient/**.rc" }
     removefiles { "src/LSClient/blowfish.cpp", "src/LSClient/Channeling/ioChannelingNodeHappyTuk.cpp", "src/LSClient/ioFlameDashWeapon.cpp", "src/LSClient/Local/ioLocalPhilippine.cpp" }
     Vpaths("src/LSClient")
-    includedirs { "src", "src/io3DEngine", "ThirdParty", "ThirdParty/HackShield", "ThirdParty/nProtect", "ThirdParty/Xtrap", "ThirdParty/XignCode", "ThirdParty/Themida", "ThirdParty/Bandicap", DXSDK .. "Include" }
+    includedirs { "src", "src/io3DEngine", "ThirdParty", DXSDK .. "Include" }
     libdirs { "lib", "lib/Bullet", "lib/Xtrap", "lib/ioVoiceChat", "lib/LuaState", "lib/Squish", "lib/Opcode", "lib/TinyXML", "lib/DevIL", "lib/OggVorbis", DXSDK .. "Lib\\x86" }
     links { "Psapi", "DbgHelp", "Imagehlp", "wininet", "Urlmon", "Iphlpapi", "Version",
             "dinput8", "d3d9", "dxguid", "d3dx9", "winmm", "odbc32", "odbccp32", "Xinput", "Iepmapi",
@@ -244,7 +233,7 @@ project "LSAutoUpgrade"
     files { "src/LSAutoUpgrade/**.h", "src/LSAutoUpgrade/**.cpp", "src/LSAutoUpgrade/**.rc" }
     removefiles { "src/LSAutoUpgrade/NMClass/*.cpp", "src/LSAutoUpgrade/Util/ioHashString.cpp" }
     Vpaths("src/LSAutoUpgrade")
-    includedirs { "ThirdParty", "ThirdParty/Xtrap", "ThirdParty/Themida", DXSDK .. "Include" }
+    includedirs { "ThirdParty", DXSDK .. "Include" }
     libdirs { "lib", "lib/Xtrap", "lib/FireWall", "lib/ZipArchive", DXSDK .. "Lib\\x86" }
     links { "ws2_32", "winmm", "version", "Iphlpapi" }
     linkoptions { "/FORCE:MULTIPLE" }
@@ -277,7 +266,7 @@ project "LSWebBroker"
     mfc "Static"
     files { "src/LSWebBroker/**.h", "src/LSWebBroker/**.cpp", "src/LSWebBroker/**.rc" }
     Vpaths("src/LSWebBroker")
-    includedirs { "ThirdParty", "ThirdParty/NMCrypt" }
+    includedirs { "ThirdParty" }
     libdirs { "lib", "lib/Netmarble" }
     links { "version", "Winmm" }
     linkoptions { "/FORCE:MULTIPLE" }
