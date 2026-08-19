@@ -12,11 +12,20 @@ Client-side source code for the Novera game project. This repository contains th
 | LSLog | DLL / Static | Logging library (DLL + static variants) |
 | TownPortal | DLL / Static | Network portal library (DLL + static variants) |
 | FlashDX | DLL | Flash-to-DirectX rendering bridge |
-| OggVorbis | Static Lib | OggVorbis audio codec built from source |
 | ErrorDlg | Static Lib | Error dialog utility |
 | SurvivalProject2 | App | Main game client (WindowedApp) |
 | LSAutoUpgrade | App | Auto-patcher / launcher (MFC Static, /MT) |
 | LSWebBroker | App | Web broker service (MFC Static, /MT) |
+
+## Third-party Layout
+
+Third-party dependencies follow a consistent convention:
+
+- `ThirdParty/<Lib>/` — headers (plus source `.cpp` for full-source libs)
+- `lib/<Lib>/` — prebuilt `.lib` files
+- Runtime DLLs live in `lib/`
+
+Source projects include third-party headers via `#include "<Lib>/<header.h>"` with `ThirdParty` as the include root. Complex SDKs (Bullet, FreeType, OggVorbis, FlashDX) keep their native folder layout and are added as their own include directories.
 
 ## Build Configurations
 
@@ -82,14 +91,34 @@ SourceClient/
 │   ├── LSLog/            # Logging
 │   ├── TownPortal/       # Network portal
 │   ├── FlashPlayerToDirectX/  # Flash DX bridge
-│   ├── OggVorbis/        # Audio codec
 │   ├── ErrorDlg/         # Error dialogs
 │   ├── LSClient/         # Main game client (SurvivalProject2)
 │   ├── LSAutoUpgrade/    # Auto-patcher
 │   └── LSWebBroker/      # Web broker
-├── ThirdParty/           # Third-party headers and libraries
+├── ThirdParty/           # Third-party headers (+ source), one folder per library
+│   ├── Bullet/           # Bullet physics
+│   ├── DevIL/            # DevIL image loader (il.h)
+│   ├── FreeType/         # FreeType font engine
+│   ├── FlashDX/          # Flash SDK interface
+│   ├── OggVorbis/        # OggVorbis audio
+│   ├── ZipArchive/       # ZipArchive pack lib (+ zlib)
+│   ├── Lua/              # Lua scripting (headers)
+│   ├── LS_HTTP/          # WinHTTP client wrapper (full source + .sln)
+│   ├── Squish/           # Squish texture compression
+│   ├── Opcode/           # Opcode collision
+│   ├── TinyXML/          # TinyXML parser
+│   ├── HackShield/       # HackShield anti-cheat
+│   ├── nProtect/         # nProtect anti-cheat
+│   ├── Xtrap/            # Xtrap anti-cheat
+│   ├── XignCode/         # XignCode anti-cheat
+│   ├── Themida/          # Themida protection SDK
+│   ├── Bandicap/         # Bandicap video capture
+│   ├── NMCrypt/          # Netmarble crypto
+│   ├── CrashFind/        # CrashFind crash handler
+│   └── ADO/              # ADO headers
 ├── lib/                  # Build outputs (.lib, .dll) with subfolders
 │   ├── Bullet/           # Bullet physics libs
+│   ├── FreeType/         # FreeType libs
 │   ├── Squish/           # Squish texture libs
 │   ├── Opcode/           # Opcode collision libs
 │   ├── TinyXML/          # TinyXML libs
