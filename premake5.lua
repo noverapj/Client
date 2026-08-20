@@ -73,6 +73,7 @@ project "ioFreeType"
     includedirs { "src/ioFreeType", "src/ioFreeType/include", "ThirdParty/FreeType" }
     libdirs { "lib", "lib/FreeType" }
     Vpaths("src/ioFreeType")
+    links { "LSLog" }
     filter "configurations:Debug" runtime "Debug"; staticruntime "Off"; targetname "ioFreeTypeD"
     filter "configurations:Release" runtime "Release"; staticruntime "Off"; targetname "ioFreeType"
     filter {}
@@ -127,6 +128,7 @@ project "TownPortal"
     defines { "EXPORT_TOWN_PORTAL", "_USRDLL", "TOWNPORTAL_EXPORTS" }
     files { "src/TownPortal/**.h", "src/TownPortal/**.cpp", "src/TownPortal/**.rc" }
     Vpaths("src/TownPortal")
+    links { "LSLog" }
     filter "configurations:Debug" runtime "Debug"; staticruntime "Off"; targetname "TownPortalD"
     filter "configurations:Release or Shipping" runtime "Release"; staticruntime "Off"; targetname "TownPortal"
     filter "configurations:*Static*" kind "StaticLib"; targetdir "lib"; staticruntime "On"
@@ -185,6 +187,7 @@ project "SurvivalProject2"
     files { "src/LSClient/**.h", "src/LSClient/**.cpp", "src/LSClient/**.rc" }
     removefiles { "src/LSClient/blowfish.cpp", "src/LSClient/Channeling/ioChannelingNodeHappyTuk.cpp", "src/LSClient/ioFlameDashWeapon.cpp", "src/LSClient/Local/ioLocalPhilippine.cpp" }
     Vpaths("src/LSClient")
+    links { "LSLog", "io3DEngine", "TownPortal", "ioPac" }
     includedirs { "src", "src/io3DEngine", "ThirdParty", DXSDK .. "Include" }
     libdirs { "lib", "lib/Bullet", "lib/Xtrap", "lib/ioVoiceChat", "lib/LuaState", "lib/Squish", "lib/Opcode", "lib/TinyXML", "lib/DevIL", "lib/OggVorbis", DXSDK .. "Lib\\x86" }
     links { "Psapi", "DbgHelp", "Imagehlp", "wininet", "Urlmon", "Iphlpapi", "Version",
