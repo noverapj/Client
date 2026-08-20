@@ -344,6 +344,31 @@ project "SurvivalProject2"
     filter {}
     prebuildcommands { '"$(ProjectDir)..\\scripts\\gen_version.bat" "$(ProjectDir)..\\src\\LSClient" Version.h' }
 
+-- LSOffline : offline client, /MD, configs Debug/Release/Shipping
+project "LSOffline"
+    kind "WindowedApp"
+    language "C++"
+    location "build"
+    targetdir "../build/zone_novera/client/%{cfg.buildcfg}/%{prj.name}"
+    objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
+    pchheader "stdafx.h"; pchsource "src/LSOffline/stdafx.cpp"
+    buildoptions { "/Zm200" }
+    files { "src/LSOffline/**.h", "src/LSOffline/**.cpp", "src/LSOffline/**.rc" }
+    removeconfigurations { "Shipping_QA", "ShippingHackShield", "ShippingNProtect", "ShippingXigncode", "ShippingXtrap", "Profile", "*Static*", "ShippingMac", "ShippingNoXtrap", "Debug_KoR", "SRC_KOR", "Ship_*", "Rel_*" }
+    local D = "src/LSOffline"
+    Vpaths(D)
+    includedirs { "src", "src/io3DEngine", "ThirdParty", DXSDK .. "Include" }
+    libdirs { "lib", DXSDK .. "Lib\\x86" }
+    links { "LSLog", "io3DEngine" }
+    links { "winmm", "d3d9", "dxguid", "d3dx9", "Psapi", "DbgHelp", "Imagehlp" }
+    filter "configurations:Debug"
+        runtime "Debug"; staticruntime "Off"; targetname "LSOfflineD"
+    filter "configurations:Release"
+        runtime "Release"; staticruntime "Off"; targetname "LSOffline"
+    filter "configurations:Shipping"
+        runtime "Release"; staticruntime "Off"; targetname "LSOffline"; defines { "SHIPPING" }
+    filter {}
+
 -- LSAutoUpgrade : Windows app (MFC Static, /MT), region Ship_* configs
 project "LSAutoUpgrade"
     kind "WindowedApp"

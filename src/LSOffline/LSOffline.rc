@@ -1,0 +1,4 @@
+// LSOffline resource file
+// Icon not yet — using default Windows icon for M1
+
+#include "resource.h"
