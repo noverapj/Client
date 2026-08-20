@@ -270,6 +270,7 @@ project "LSWebBroker"
     mfc "Static"
     files { "src/LSWebBroker/**.h", "src/LSWebBroker/**.cpp", "src/LSWebBroker/**.rc" }
     Vpaths("src/LSWebBroker")
+    removeconfigurations { "Shipping*", "Profile", "*Static*", "Ship_*", "Debug_KoR" }
     includedirs { "ThirdParty" }
     libdirs { "lib", "lib/Netmarble" }
     links { "version", "Winmm" }
