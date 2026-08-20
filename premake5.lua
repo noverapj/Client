@@ -4,12 +4,20 @@
 
 local DXSDK = os.getenv("DXSDK_DIR") or "C:\\Program Files (x86)\\Microsoft DirectX SDK (June 2010)\\"
 
+local function grp(dir, group, ...)
+    local t = {}
+    for _, name in ipairs({...}) do
+        t[#t+1] = dir .. "/" .. name .. ".cpp"
+        t[#t+1] = dir .. "/" .. name .. ".h"
+    end
+    vpaths { [group] = t }
+end
+
 local function Vpaths(projDir)
     vpaths {
-        ["Source Files"]    = { projDir .. "/*.cpp" },
-        ["Header Files"]    = { projDir .. "/*.h" },
-        ["Resource Files"]   = { projDir .. "/*.rc" },
-        ["*"]                = { projDir .. "/**.cpp", projDir .. "/**.h", projDir .. "/**.rc", projDir .. "/**.txt" },
+        ["Source Files"]   = { projDir .. "/**.cpp" },
+        ["Header Files"]   = { projDir .. "/**.h" },
+        ["Resource Files"] = { projDir .. "/**.rc" },
     }
 end
 
@@ -29,6 +37,7 @@ workspace "Client"
     location "build"
     characterset "MBCS"
     multiprocessorcompile "On"
+    defines { "_CRT_SECURE_NO_WARNINGS", "_CRT_NONSTDC_NO_WARNINGS", "_WINSOCK_DEPRECATED_NO_WARNINGS" }
 
     filter "configurations:Debug*"    defines { "_DEBUG" }
     filter "configurations:Release* or Shipping* or Ship_* or Rel_* or SRC_KOR or Profile"
@@ -50,7 +59,42 @@ project "io3DEngine"
     includedirs { "ThirdParty/Bullet", "ThirdParty", "ThirdParty/OggVorbis", DXSDK .. "Include" }
     libdirs { "lib", "lib/Bullet", "lib/Squish", "lib/Opcode", "lib/TinyXML", "lib/DevIL", "lib/OggVorbis", DXSDK .. "Lib\\x86" }
     files { "src/io3DEngine/**.h", "src/io3DEngine/**.cpp", "src/io3DEngine/**.rc" }
-    Vpaths("src/io3DEngine")
+    local D = "src/io3DEngine"
+    vpaths { ["Resource Files"] = { D.."/resource.h", D.."/io3DEngine.rc" } }
+    grp(D, "Source Files", "io3DEngine", "StdAfx")
+    grp(D, "Header Files", "io3DCommon", "ioPrerequisites", "StdAfx", "Version")
+    grp(D, "io3DEngine", "ErrorReport", "HelpFunc", "ioEntityGroupBuilder", "ioSingleton", "ioVertexFormat")
+    grp(D, "io3DEngine/Resource Class", "ioRc2DImage", "ioRcAnimateFX", "ioRcAnimation", "ioRcAniTrack", "ioRcBiped", "ioRcFont", "ioRcSkeleton", "ioResource", "ioResourceLoader", "ioDataProcessor", "ioAnimationEvent")
+    grp(D, "io3DEngine/Instance Class", "io2DImage", "ioAniController", "ioAniEventHandler", "ioAnimateFX", "ioAnimation", "ioAniTrack", "ioAutoShaderParamSource", "ioBiped", "ioEdgeRender", "ioFont", "ioFontWorkSpace", "ioLight", "ioMaterial", "ioMesh", "ioMeshControlPoint", "ioMeshTrailer", "ioPass", "ioRenderTexture", "ioShader", "ioShaderDefine", "ioShaderGroup", "ioShaderParameter", "ioSkeleton", "ioSubMesh", "ioTechnique", "ioTexture", "ioTextureUnitState")
+    grp(D, "io3DEngine/Manager Class", "io2DImageManager", "ioAnimateFXManager", "ioAnimationManager", "ioFontManager", "ioGUIManager", "ioMaterialManager", "ioMaterialSerializer", "ioMeshManager", "ioMeshTrailDataManager", "ioOpcodeManager", "ioOpcodeManagerImpl", "ioResourceManager", "ioShaderManager", "ioSkeletonManager", "ioTextureEffectManager", "ioTextureManager", "ioThreadTaskManager", "ioAnimationEventManager")
+    grp(D, "io3DEngine/Buffer Class", "ioMeshData")
+    grp(D, "io3DEngine/Buffer Class/VertexBuffer", "ioVertexBufferBinder", "ioVertexBufferHeap", "ioVertexBufferInstance", "ioVertexBufferManager", "ioVertexDeclaration", "ioVtxBuffer")
+    grp(D, "io3DEngine/Buffer Class/IndexBuffer", "ioIdxBuffer", "ioIndexBufferHeap", "ioIndexBufferInstance", "ioIndexBufferManager")
+    grp(D, "io3DEngine/SceneManager Class", "ioEntity", "ioEntityGroup", "ioMovableObject", "ioNode", "ioSceneManager", "ioSceneNode", "ioSceneShadowBox", "ioSubEntity", "ioEntityParent", "ioMaterialModifier")
+    grp(D, "io3DEngine/Collision Object", "ioAxisAlignBox", "ioCylinder", "ioOpcodeShapeImpl", "ioOrientBox", "ioPlane", "ioPolygonMesh", "ioRay", "ioSegment", "ioSphere", "ioOpcodeShape")
+    grp(D, "io3DEngine/Camera", "ioCamera")
+    grp(D, "io3DEngine/Camera/Controller", "ioCameraController", "ioFPSCameraController", "ioLookAtCameraController", "ioSlerpCameraController", "ioTargetLookAtCameraController")
+    grp(D, "io3DEngine/LandScape", "ioLandScape", "ioPatch", "ioPatchDefault", "ioPatchMorphSW")
+    grp(D, "io3DEngine/Util Class", "AxisXYZ", "Grid3D", "ioBulletHelper", "ioCurveGenerator", "ioDataChunk", "ioDecal", "ioDecalMaker", "ioFrameTimer", "ioHashString", "ioINILoader", "ioINIParser", "ioLineRender", "ioMath", "ioMemFile", "ioRandomCreator", "ioRopeSpringCurve", "ioSkyDome", "ioStream", "ioTimer", "ioTimeRateFactor", "QuaternionCompression", "ioListIterator", "ioMapIterator", "ioMemoryPool", "ioSharedPtr", "ioTPtrArray", "ioVectorIterator", "ioFileTokenDefine")
+    grp(D, "io3DEngine/Util Class/Mesh", "ioDivisionMesh", "ioProgressiveMesh", "ioSubDivisionMesh")
+    grp(D, "io3DEngine/Util Class/Other", "IntersectionUtility", "TriangleAndAABBTest", "FastQuaternionSlerp")
+    grp(D, "io3DEngine/Effect Class", "ioEffect", "ioEffectFactory", "ioEmitPointGenerator", "ioLightSystem", "ioParticleColorTable")
+    grp(D, "io3DEngine/Effect Class/Particle System", "ioEmitterCommands", "ioParticle", "ioParticleEmitter", "ioParticleIterator", "ioParticleSystem")
+    grp(D, "io3DEngine/Effect Class/Particle System/Affector", "ioBipedTrailAffector", "ioEmitAffector", "ioLinearForceAffector", "ioParticleAffector", "ioRotationAffector", "ioScaleAffector", "ioTexRotationAffector")
+    grp(D, "io3DEngine/Effect Class/Model Particle System", "ioModelEmitCommand", "ioModelEmitter", "ioModelParticle", "ioModelParticleIterator", "ioModelParticleSystem")
+    grp(D, "io3DEngine/Effect Class/Model Particle System/Model Affector", "ioModelBipedTrailAffector", "ioModelEmitAffector", "ioModelLinearForceAffector", "ioModelParticleAffector", "ioModelRotateAffector", "ioModelScaleAffector")
+    grp(D, "io3DEngine/Effect Class/EffectRendering", "ioEffectBufferManager", "ioParticleRenderable")
+    grp(D, "io3DEngine/ioWnd3D", "ioButton", "ioDragItem", "ioEdit", "ioList", "ioMouse", "ioProgressBar", "ioScroll", "ioTabControl", "ioWnd", "ioWndType", "ioMovingWnd")
+    grp(D, "io3DEngine/ioWnd3D/UIRender", "ioUIFrameManager", "ioUIImage", "ioUIImageSet", "ioUIImageSetManager", "ioUIRenderElement", "ioUIRenderer", "ioUIRenderFrame", "ioUIRenderImage", "ioUITitle", "ioUI3DEffectRender")
+    grp(D, "io3DEngine/ioWnd3D/ioWndEX", "ioWndEXEventHandler", "ioCustomWnd", "ioCheckBoxEX", "ioPaperDoll", "ioLabelWndEX", "ioFrameWndEX", "ioWndEXEventType", "ioTabWndEX", "ioImageWndEX", "ioComplexStringPrinterBase", "ioWndEXType", "ioFlashPlayer", "ioRichLabel", "ioScrollBarEX", "ioButtonWndEX", "ioRadioButtonEX", "ioWndEX")
+    grp(D, "io3DEngine/InputBox", "EditBox", "InputBox", "ioIME")
+    grp(D, "io3DEngine/RenderSystem", "ioEnumDisplayMode", "ioRenderable", "ioRenderableList", "ioRenderOperation", "ioRenderQueue", "ioRenderQueueGroup", "ioRenderStateDesc", "ioRenderSystem")
+    grp(D, "io3DEngine/String Processing", "ioLocalManagerParent", "ioStringConverter", "ioStringInterface", "ioStringManager", "Safesprintf")
+    grp(D, "io3DEngine/Texture Effect", "ioTextureAnimationEffect", "ioTextureColorTransformEffect", "ioTextureEffect", "ioTextureRotateEffect", "ioTextureScrollEffect", "ioTextureTransformEffect")
+    grp(D, "io3DEngine/Post Process", "ioGlowPostProcess", "ioPostFilter", "ioPostOveray")
+    grp(D, "io3DEngine/CPU", "CPUSpeedCheck", "FastAssemFunc", "ioCPU", "ioSIMDGeneric", "ioSIMDSSE")
+    grp(D, "io3DEngine/XML", "ioXMLDocument", "ioXMLElement")
+    grp(D, "Sound", "ioOggCallBack", "ioOggSound", "ioSound", "ioSoundManager", "ioWaveFile")
     filter "configurations:Debug" runtime "Debug"; staticruntime "Off"; targetname "io3DEngined"
     filter "configurations:Release" runtime "Release"; staticruntime "Off"; targetname "io3DEngine"
     filter "configurations:Shipping" runtime "Release"; staticruntime "Off"; targetname "io3DEngine"; defines { "SHIPPING" }; targetdir "lib/lib_Shipping"
@@ -186,7 +230,82 @@ project "SurvivalProject2"
     buildoptions { "/Zm200", "/Zc:forScope-" }
     files { "src/LSClient/**.h", "src/LSClient/**.cpp", "src/LSClient/**.rc" }
     removefiles { "src/LSClient/blowfish.cpp", "src/LSClient/Channeling/ioChannelingNodeHappyTuk.cpp", "src/LSClient/ioFlameDashWeapon.cpp", "src/LSClient/Local/ioLocalPhilippine.cpp" }
-    Vpaths("src/LSClient")
+    local D = "src/LSClient"
+    grp(D, "GUI", "GUI/**")
+    grp(D, "GameStage", "GameStage/**")
+    grp(D, "Channeling", "Channeling/**")
+    grp(D, "Local", "Local/**")
+    grp(D, "HackShield", "HackShield/**")
+    grp(D, "Housing", "Housing/**")
+    grp(D, "IoString", "IoString/**")
+    grp(D, "ioVoiceChat", "ioVoiceChat/*")
+    grp(D, "LuaState", "LuaState/**")
+    grp(D, "MiniDump", "MiniDump/**")
+    grp(D, "nProtect", "nProtect/**")
+    grp(D, "Xtrap", "Xtrap/**")
+    grp(D, "XignCode", "XignCode/**")
+    grp(D, "DataHeaders", "DataHeaders/**")
+    grp(D, "Encode", "Encode/**")
+    grp(D, "StateClass", "StateClass/**")
+    grp(D, "TownPortal", "TownPortal/**")
+    grp(D, "LSLog", "LSLog/**")
+    grp(D, "AreaWeapon", "ioAreaWeapon*")
+    grp(D, "Weapon/AttackAttribute", "ioAttackAttribute*")
+    grp(D, "Weapon", "ioWeapon*")
+    grp(D, "Item/WeaponItem", "io*WeaponItem*")
+    grp(D, "Item/ArmorItems", "io*Armor*")
+    grp(D, "Item/CloakItem", "io*Cloak*")
+    grp(D, "Item/HelmetItem", "io*Helmet*")
+    grp(D, "Item/WearItem", "io*Wear*")
+    grp(D, "Item/ObjectItem", "io*ObjectItem*")
+    grp(D, "Item/ExtendDash", "io*ExtendDash*")
+    grp(D, "Item/ExtendJump", "io*ExtendJump*")
+    grp(D, "Item", "io*Item*")
+    grp(D, "Skill/AttackSkill", "io*AttackSkill*")
+    grp(D, "Skill/NormalSkill", "io*NormalSkill*")
+    grp(D, "Skill/RangeSkill", "io*RangeSkill*")
+    grp(D, "Skill/PassiveSkill", "io*PassiveSkill*")
+    grp(D, "Skill/BuffSkill", "io*BuffSkill*")
+    grp(D, "Skill/MultiSkill", "io*MultiSkill*")
+    grp(D, "Skill", "io*Skill*")
+    grp(D, "Buff/MovementBuff", "io*MovementBuff*")
+    grp(D, "Buff/HPBuff", "io*HPBuff*")
+    grp(D, "Buff/ProtectBuff", "io*ProtectBuff*")
+    grp(D, "Buff/StateBuff", "io*StateBuff*")
+    grp(D, "Buff/SizeBuff", "io*SizeBuff*")
+    grp(D, "Buff/GaugeBuff", "io*GaugeBuff*")
+    grp(D, "Buff", "io*Buff*")
+    grp(D, "GameEntity/PlayEntity", "io*PlayEntity*")
+    grp(D, "GameEntity/WorldEntity", "io*WorldEntity*")
+    grp(D, "GameEntity/CollisionBoxGrp", "io*CollisionBox*")
+    grp(D, "GameEntity", "io*Entity*")
+    grp(D, "GameStage", "ioGameStage*")
+    grp(D, "Application", "ioApplication*")
+    grp(D, "Network/TCP", "io*TCP*")
+    grp(D, "Network/UDP", "io*UDP*")
+    grp(D, "Network", "io*Network*", "io*Packet*")
+    grp(D, "CameraEvent", "ioCameraEvent*")
+    grp(D, "RenderHelp", "io*RenderHelp*", "io*TargetMarker*")
+    grp(D, "Talisman", "ioTalisman*")
+    grp(D, "RaceConfig", "ioRace*")
+    grp(D, "ioBrowser", "ioBrowser*")
+    grp(D, "GA", "ioGA*")
+    grp(D, "Text", "ioText*")
+    grp(D, "System/Housing", "io*Housing*")
+    grp(D, "System/Pet", "io*Pet*")
+    grp(D, "System/Guild", "io*Guild*")
+    grp(D, "System/Shop", "io*Shop*")
+    grp(D, "System/Quest", "io*Quest*")
+    grp(D, "System/Tournament", "io*Tournament*")
+    grp(D, "System/Event", "io*Event*")
+    grp(D, "System/Costume", "io*Costume*")
+    grp(D, "System/Mission", "io*Mission*")
+    grp(D, "System/Level", "io*Level*")
+    grp(D, "System/TradeInfo", "io*Trade*")
+    grp(D, "System", "io*System*", "io*Manager*", "io*Camp*", "io*Medal*", "io*PowerUp*", "io*Spirit*", "io*BonusCash*", "io*SubScription*")
+    vpaths { ["Source Files"] = { D.."/*.cpp" } }
+    vpaths { ["Header Files"] = { D.."/*.h" } }
+    vpaths { ["Resource Files"] = { D.."/**.rc" } }
     links { "LSLog", "io3DEngine", "TownPortal", "ioPac" }
     includedirs { "src", "src/io3DEngine", "ThirdParty", DXSDK .. "Include" }
     libdirs { "lib", "lib/Bullet", "lib/Xtrap", "lib/ioVoiceChat", "lib/LuaState", "lib/Squish", "lib/Opcode", "lib/TinyXML", "lib/DevIL", "lib/OggVorbis", DXSDK .. "Lib\\x86" }
