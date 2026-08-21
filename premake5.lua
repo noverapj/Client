@@ -344,7 +344,7 @@ project "SurvivalProject2"
     filter {}
     prebuildcommands { '"$(ProjectDir)..\\scripts\\gen_version.bat" "$(ProjectDir)..\\src\\LSClient" Version.h' }
 
--- LSOffline : offline client, /MD, configs Debug/Release/Shipping
+-- LSOffline : offline client, copy of LSClient with OFFLINE_MODE, configs Debug/Release/Shipping
 project "LSOffline"
     kind "WindowedApp"
     language "C++"
@@ -352,22 +352,32 @@ project "LSOffline"
     targetdir "../build/zone_novera/client/%{cfg.buildcfg}/%{prj.name}"
     objdir "build/obj/%{cfg.buildcfg}/%{prj.name}"
     pchheader "stdafx.h"; pchsource "src/LSOffline/stdafx.cpp"
-    buildoptions { "/Zm200" }
+    buildoptions { "/Zm200", "/Zc:forScope-" }
     files { "src/LSOffline/**.h", "src/LSOffline/**.cpp", "src/LSOffline/**.rc" }
+    removefiles {
+        "src/LSOffline/ioFlameDashWeapon.cpp",
+        "src/LSOffline/Local/ioLocalPhilippine.cpp",
+    }
     removeconfigurations { "Shipping_QA", "ShippingHackShield", "ShippingNProtect", "ShippingXigncode", "ShippingXtrap", "Profile", "*Static*", "ShippingMac", "ShippingNoXtrap", "Debug_KoR", "SRC_KOR", "Ship_*", "Rel_*" }
     local D = "src/LSOffline"
     Vpaths(D)
     includedirs { "src", "src/io3DEngine", "ThirdParty", DXSDK .. "Include" }
-    libdirs { "lib", DXSDK .. "Lib\\x86" }
-    links { "LSLog", "io3DEngine" }
-    links { "winmm", "d3d9", "dxguid", "d3dx9", "Psapi", "DbgHelp", "Imagehlp" }
+    libdirs { "lib", "lib/Bullet", "lib/ioVoiceChat", "lib/LuaState", "lib/Squish", "lib/Opcode", "lib/TinyXML", "lib/DevIL", "lib/OggVorbis", DXSDK .. "Lib\\x86" }
+    links { "LSLog", "io3DEngine", "TownPortal", "ioPac" }
+    links { "Psapi", "DbgHelp", "Imagehlp", "wininet", "Urlmon", "Iphlpapi", "Version",
+            "dinput8", "d3d9", "dxguid", "d3dx9", "winmm", "odbc32", "odbccp32", "Xinput", "Iepmapi" }
+    defines { "NEXON_IP", "BALANCE_RENEWAL" }
     filter "configurations:Debug"
         runtime "Debug"; staticruntime "Off"; targetname "LSOfflineD"
+        defines { "LOCAL_DBG" }
     filter "configurations:Release"
         runtime "Release"; staticruntime "Off"; targetname "LSOffline"
+        defines { "ICEMAWANG_AI_MODE" }
     filter "configurations:Shipping"
-        runtime "Release"; staticruntime "Off"; targetname "LSOffline"; defines { "SHIPPING" }
+        runtime "Release"; staticruntime "Off"; targetname "LSOffline"
+        defines { "SHIPPING", "ICEMAWANG_AI_MODE" }
     filter {}
+    prebuildcommands { '"$(ProjectDir)..\\scripts\\gen_version.bat" "$(ProjectDir)..\\src\\LSOffline" Version.h' }
 
 -- LSAutoUpgrade : Windows app (MFC Static, /MT), region Ship_* configs
 project "LSAutoUpgrade"
